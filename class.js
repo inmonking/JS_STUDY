@@ -127,4 +127,5 @@ setTimeout(() => {
     poke3.infoFn();
     poke4.infoFn();
     action.vs.call(poke3,poke4);
+    poke6.infoFn();
 }, 100);
