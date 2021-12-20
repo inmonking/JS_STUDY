@@ -9,7 +9,11 @@ class User{
 
     buyItem = (item)=>{
         this.Money -= item.cost;
-        this.ItemCount = (this.Item[item.id]||0).count + 1
+        try{
+            this.ItemCount = this.Item[item.id].count + 1
+        }catch(e){
+            this.ItemCount = 1
+        }
         this.buiedItem = {
             [item.id] : {
                 ...item,
@@ -20,5 +24,8 @@ class User{
             ...this.Item,
             ...this.buiedItem
         }
+        
+        delete this.buiedItem;
+        delete this.ItemCount;
     }
 }
