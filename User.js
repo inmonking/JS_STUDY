@@ -3,6 +3,7 @@ class User{
     Item = {}
     Poke = []
     Money = 10000
+    score = 0
     constructor(){
 
     }
@@ -28,4 +29,6 @@ class User{
         delete this.buiedItem;
         delete this.ItemCount;
     }
+
+    
 }

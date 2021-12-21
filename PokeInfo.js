@@ -1,10 +1,7 @@
 class PokeInfo{
     info = {};
     constructor(id){    // 생성자
-        var url = this.ajaxCall(id);
-        url.then(({data})=>{
-            this.infoImport(data);     
-        });
+        this.id = id
     }
 
     infoImport(data){   // 클래스 내에 정의된 함수는 prototype 내에 정의된다
@@ -32,5 +29,12 @@ class PokeInfo{
 
     ajaxCall = function(id){
         return axios.get('https://pokeapi.co/api/v2/pokemon/'+id)
+    }
+
+    getInfo = async ()=>{
+        var url = this.ajaxCall(this.id);
+        await url.then(({data})=>{
+            this.infoImport(data);     
+        });
     }
 }

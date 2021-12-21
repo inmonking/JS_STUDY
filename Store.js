@@ -43,9 +43,10 @@ class Store{
     buyItem = (id,user)=>{
         this.item = this.ItemList[id];
         if(user.Money>=this.item.cost){
-            window.systemLog(`${user.name} 가 아이템 ${this.item.name}을 구매합니다.`);
-            window.stateUpdate({now:'itembuy'})
+            window.systemLog(`아이템 ${this.item.name}을 구매합니다.`);
             user.buyItem(this.item)
+        }else{
+            window.systemLog(`돈이 부족합니다!`)
         }
     }
 }

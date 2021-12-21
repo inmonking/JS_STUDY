@@ -1,6 +1,12 @@
 class HavePoke{
-    info = {};
-    myInfo = {};
+    info = {}
+    myInfo = {}
+    score = 0
+    captureEventScript = [
+        '앗! 몬스터가 볼에서 튀어 나왔다',
+        '안돼! 몬스터가 볼에서 튀어 나왔다!',
+        '아깝다! 다 잡은 줄 알았는데!'
+    ]
     constructor(allPokeInfo, data){
         this.info = allPokeInfo.getPokeInfo(data.id).info;
         this.myInfo = {
@@ -11,22 +17,43 @@ class HavePoke{
             'special-attack' : Math.floor(((this.info.stats['special-attack'] * 2 + 31)*(data.level/100)+5)),
             'special-defense' : Math.floor(((this.info.stats['special-defense'] * 2 + 31)*(data.level/100)+5)),
             speed : Math.floor(((this.info.stats.speed * 2 + 31)*(data.level/100)+5)),
-            'capture_rate' : 25
+            'capture_rate' : this.info.capture_rate
         }
+        this.score = this.myInfo.hp
+                + this.myInfo.attack
+                + this.myInfo.defense
+                + this.myInfo['special-attack']
+                + this.myInfo['special-defense']
+                + this.myInfo.speed
     }
 
-    capture = ({infoData})=>{
+    capture = (userBallData, user)=>{
+        userBallData.count--    // 선택된 볼 1개 소모
+        var {infoData} = userBallData
         console.log(this.myInfo['capture_rate']);
-        var captureCurrent = (3*this.myInfo.hp - 2 * this.myInfo.hp)/(3*this.myInfo.hp)*this.myInfo['capture_rate']*infoData.catchRate
-        var captureCurrent2 = 65536 * Math.pow((captureCurrent/255),0.1875)
-        var randomIncount = [
+        var captureCalc = (3*this.myInfo.hp - 2 * (this.myInfo.hp*0.5))/(3*this.myInfo.hp)*this.myInfo['capture_rate']*infoData.catchRate
+        var captureEncount = 65536 * Math.pow((captureCalc/255),0.1875)
+        var randomEncount = [
             Math.floor(Math.random() * 100000 % 65536 + 1)
-            ,Math.random() * 100000 % 65536 + 1
-            ,Math.random() * 100000 % 65536 + 1
-            ,Math.random() * 100000 % 65536 + 1
+            ,Math.floor(Math.random() * 100000 % 65536 + 1)
+            ,Math.floor(Math.random() * 100000 % 65536 + 1)
+            ,Math.floor(Math.random() * 100000 % 65536 + 1)
         ]
-        console.log(captureCurrent);
-        console.log(captureCurrent2);
-        console.log(randomIncount);
+        randomEncount.sort((a,b)=>{
+            if(a > b) return 1;
+            if(a === b) return 0;
+            if(a < b) return -1;
+        });
+
+        console.log(captureEncount)
+        console.log(randomEncount)
+        var captureCount = randomEncount.filter((e)=>e<=captureEncount).length;
+        if(captureCount<4){
+            window.systemLog(`실패!`)
+            window.systemLog(this.captureEventScript[captureCount-1])
+        }else{
+            window.systemLog(`${this.info.name}를 잡았다!`)
+            window.stateUpdate({now:'captureSuccess', capturePoke : this})
+        }
     }
 }

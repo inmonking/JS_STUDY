@@ -10,11 +10,12 @@
 
 <body>
     <div id="App" style="display: flex;">
-        <div id="Log" style="max-height: 600px; overflow: auto;">
+        <div id="Log" style="max-height: 300px; overflow: auto;">
         </div>
-        <div id="stage" style="max-height: 600px; overflow: auto;">
+        <div id="stage" style="max-height: 300px; overflow: auto;">
             <img id="stagingPoke" src>
-            <div>선택된 볼 : <span></span></div>
+            <div>level : <span id="pokeLevel">0</span> 점수 : <span id="pokeScore">0</span></div>
+            <div>선택된 볼 : <span id="selectedBall"></span></div>
             <button id="capture">볼 던지기</button>
             <button id="escape">도망치기 (포켓몬 교체)</button>
         </div>
@@ -24,16 +25,19 @@
                     <td>몬스터볼 : </td>
                     <td id="ball0">0</td>
                     <td><button onclick="ButtonEvent.selectBall(0)">볼선택</button></td>
+                    <td><button onclick="ButtonEvent.buyItem(0)">볼구매</button></td>
                 </tr>
                 <tr>
                     <td>슈퍼볼 : </td>
                     <td id="ball1">0</td>
                     <td><button onclick="ButtonEvent.selectBall(1)">볼선택</button></td>
+                    <td><button onclick="ButtonEvent.buyItem(1)">볼구매</button></td>
                 </tr>
                 <tr>
                     <td>하이퍼볼 : </td>
                     <td id="ball2">0</td>
                     <td><button onclick="ButtonEvent.selectBall(2)">볼선택</button></td>
+                    <td><button onclick="ButtonEvent.buyItem(2)">볼구매</button></td>
                 </tr>
                 <tr>
                     <td>소지금 : </td>
@@ -41,11 +45,13 @@
                 </tr>
             </table>
         </div>
-        <div>
-        </div>
+    </div>
+    <div>내 점수 : <span id="myScore"></span></div>
+    <div id="capturePoke" style="width: 800px;">
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./pokeInfo.js"></script>
+    <script src="./CaptureRate.js"></script>
     <script src="./ItemInfo.js"></script>
     <script src="./Store.js"></script>
     <script src="./AllPokeInfo.js"></script>
@@ -54,6 +60,7 @@
     <script src="./System.js"></script>
     <script src="./ButtonEvent.js"></script>
     <script src="./SystemEvent.js"></script>
+    <script src="./SystemProxy.js"></script>
 
 
 

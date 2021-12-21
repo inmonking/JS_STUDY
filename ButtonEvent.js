@@ -12,8 +12,10 @@ ButtonEvent = {
         if(ball == null){
             systemLog('볼을 먼저 구매해야 합니다!')
         }else{
-            systemLog(`${ball.name}을 선택 하였다!`)
-            window.stateUpdate({now:'ballChange', ball : ball});
+            window.stateUpdate({now:'ballChange', ball : user.Item[ballId]});
         }
+    },
+    buyItem : function(itemId){
+        window.stateUpdate({now:'buyItem', buyItemId : itemId});
     }
 }
